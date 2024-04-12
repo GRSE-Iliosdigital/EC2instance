@@ -5,14 +5,14 @@ data "aws_availability_zones" "available" {}
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
   name                             = "${var.namespace}-vpc"
-  cidr                             = "10.55.0.0/16"
+  cidr                             = var.vpc_cidr
   azs                              = data.aws_availability_zones.available.names
-  private_subnets                  = ["10.55.11.0/24", "10.55.12.0/24"]
-  public_subnets                   = ["10.55.101.0/24", "10.55.102.0/24"]
+  private_subnets                  = var.private_subnets
+  public_subnets                   = var.public_subnets
   #assign_generated_ipv6_cidr_block = true
   create_database_subnet_group     = true
-  enable_nat_gateway               = true
-  single_nat_gateway               = true
+  enable_nat_gateway               = false
+  single_nat_gateway               = false
 }
 
 // SG to allow SSH connections from anywhere
@@ -21,19 +21,23 @@ resource "aws_security_group" "public" {
   description = "Allow SSH inbound traffic"
   vpc_id      = module.vpc.vpc_id
 
-  ingress {
-    description = "SSH from the internet"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+  dynamic "ingress" {
+    for_each = var.SG_Ports
+    content {
+      description = "SSH from the internet"
+      from_port   = ingress.value
+      to_port     = ingress.value
+      protocol    = "tcp"
+      cidr_blocks = var.SG_cidr_Public
+    }
+    
   }
 
   egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = var.SG_cidr_Public
   }
 
   tags = {

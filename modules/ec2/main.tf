@@ -4,7 +4,7 @@
 resource "aws_instance" "ec2_public" {
   ami                         = var.ami
   associate_public_ip_address = true
-  instance_type               = "t4g.2xlarge"
+  instance_type               = var.instance_type
   key_name                    = var.key_name
   subnet_id                   = var.vpc.public_subnets[0]
   vpc_security_group_ids      = [var.sg_pub_id]
@@ -20,7 +20,7 @@ resource "aws_instance" "ec2_public" {
 
     connection {
       type        = "ssh"
-      user        = "ec2-user"
+      user        = var.username
       private_key = file("${var.key_name}.pem")
       host        = self.public_ip
     }
@@ -32,7 +32,7 @@ resource "aws_instance" "ec2_public" {
 
     connection {
       type        = "ssh"
-      user        = "ec2-user"
+      user        = var.username
       private_key = file("${var.key_name}.pem")
       host        = self.public_ip
     }

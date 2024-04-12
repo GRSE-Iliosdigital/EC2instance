@@ -21,3 +21,13 @@ variable "sg_pub_id" {
 variable "sg_priv_id" {
   type = any
 }
+
+variable "instance_type" {
+  description = "The instance type for the EC2 instance"
+  default     = "t4g.2xlarge"
+}
+
+variable "username" {
+  description = "The username to use for SSH authentication on the EC2 instance"
+  default     = "ec2-user"
+}
