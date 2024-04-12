@@ -16,7 +16,7 @@ resource "aws_instance" "ec2_public" {
   # Copies the ssh key file to home dir
   provisioner "file" {
     source      = "./${var.key_name}.pem"
-    destination = "/home/ec2-user/${var.key_name}.pem"
+    destination = "/home/${var.username}/${var.key_name}.pem"
 
     connection {
       type        = "ssh"
