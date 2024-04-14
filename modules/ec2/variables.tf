@@ -29,5 +29,5 @@ variable "instance_type" {
 
 variable "username" {
   description = "The username to use for SSH authentication on the EC2 instance"
-  default     = "ec2-user"
+  default     = "ubuntu"
 }
