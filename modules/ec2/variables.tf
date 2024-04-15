@@ -35,10 +35,22 @@ variable "username" {
 variable "root_volume_size" {
   description = "Size of the root volume in GB"
   type        = number
-  default     = 500  
+  default     = 100 
 }
 
 variable "root_volume_type" {
+  description = "Type of the root volume"
+  type        = string
+  default     = "gp3"  
+}
+
+variable "additional_volume_size" {
+  description = "Size of the root volume in GB"
+  type        = number
+  default     = 400   
+}
+
+variable "additional_volume_type" {
   description = "Type of the root volume"
   type        = string
   default     = "gp3"  

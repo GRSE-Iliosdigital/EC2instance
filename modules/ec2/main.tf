@@ -18,6 +18,14 @@ resource "aws_instance" "ec2_public" {
     volume_type = var.root_volume_type
   }
 
+  # Additional EBS volume
+  ebs_block_device {
+    device_name           = "/dev/sdb"  # You can adjust the device name as needed (/dev/xvdb, /dev/nvme1n1, etc.)
+    volume_size           = var.additional_volume_size
+    volume_type           = var.additional_volume_type
+    delete_on_termination = false  # Adjust this based on your retention needs
+  }
+
   # Copies the ssh key file to home dir
   provisioner "file" {
     source      = "./${var.key_name}.pem"
@@ -45,4 +53,5 @@ resource "aws_instance" "ec2_public" {
   }
 
 }
+
 
