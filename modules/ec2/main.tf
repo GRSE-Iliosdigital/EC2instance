@@ -25,7 +25,7 @@ resource "aws_instance" "ec2_public" {
 
     connection {
       type        = "ssh"
-      user        = var.username
+      user        = "ubuntu"
       private_key = file("${var.key_name}.pem")
       host        = self.public_ip
     }
@@ -37,7 +37,7 @@ resource "aws_instance" "ec2_public" {
 
     connection {
       type        = "ssh"
-      user        = var.username
+      user        = "ubuntu"
       private_key = file("${var.key_name}.pem")
       host        = self.public_ip
     }

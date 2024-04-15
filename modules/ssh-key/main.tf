@@ -9,7 +9,8 @@ resource "tls_private_key" "key" {
 resource "local_file" "private_key" {
   filename          = "${var.namespace}-key.pem"
   sensitive_content = tls_private_key.key.private_key_pem
-  file_permission   = "0400"
+  directory_permission = "0700"
+  file_permission   = "0600"
 }
 
 resource "aws_key_pair" "key_pair" {
