@@ -13,6 +13,11 @@ resource "aws_instance" "ec2_public" {
     "Name" = "${var.namespace}-APP&DB"
   }
 
+  root_block_device {
+    volume_size = var.root_volume_size
+    volume_type = var.root_volume_type
+  }
+
   # Copies the ssh key file to home dir
   provisioner "file" {
     source      = "./${var.key_name}.pem"

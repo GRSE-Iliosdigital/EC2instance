@@ -31,3 +31,15 @@ variable "username" {
   description = "The username to use for SSH authentication on the EC2 instance"
   default     = "ubuntu"
 }
+
+variable "root_volume_size" {
+  description = "Size of the root volume in GB"
+  type        = number
+  default     = 500  
+}
+
+variable "root_volume_type" {
+  description = "Type of the root volume"
+  type        = string
+  default     = "gp3"  
+}
